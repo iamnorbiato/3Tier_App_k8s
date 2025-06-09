@@ -1,0 +1,11 @@
+# db-persistentvolumeclaim.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pv-claim # Nome do seu PVC
+spec:
+  accessModes:
+    - ReadWriteOnce       # Permite que seja montado como leitura/escrita por um único nó
+  resources:
+    requests:
+      storage: 1Gi       # Solicita 1 Gigabyte de armazenamento. Ajuste conforme sua necessidade!

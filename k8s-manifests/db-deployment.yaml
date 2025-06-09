@@ -1,0 +1,41 @@
+# db-deployment.yaml (com a seção de recursos adicionada)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+  labels:
+    app: db_pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db_pod
+  template:
+    metadata:
+      labels:
+        app: db_pod
+    spec:
+      containers:
+      - name: dbserver
+        image: postgres:15
+        envFrom:
+          - secretRef:
+              name: postgres-secrets # Faremos isso na Etapa 3
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+        # --- SEÇÃO ADICIONADA/MODIFICADA ---
+        resources:
+          requests:
+            cpu: "250m"  # Solicita 0.25 CPU core
+            memory: "512Mi" # Solicita 512 Megabytes de memória
+          limits:
+            cpu: "1000m" # Limita a 1 CPU core (1000m = 1 core)
+            memory: "1Gi" # Limita a 1 Gigabyte de memória
+        # --- FIM DA SEÇÃO ADICIONADA/MODIFICADA ---
+      volumes:
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: postgres-pv-claim

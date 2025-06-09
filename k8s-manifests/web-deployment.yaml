@@ -1,0 +1,40 @@
+# web-deployment.yaml (REMOVER command E args)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  labels:
+    app: web_pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web_pod
+  template:
+    metadata:
+      labels:
+        app: web_pod
+    spec:
+      containers:
+      - name: webserver
+        image: webimage:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
+        volumeMounts:
+        - name: nginx-config-volume
+          mountPath: /etc/nginx/conf.d/ # <--- MUDANÇA ANTERIOR
+          readOnly: true
+          # REMOVER subPath
+        # REMOVER AS LINHAS DE command E args AQUI
+      volumes:
+      - name: nginx-config-volume
+        configMap:
+          name: frontend-nginx-config # <--- MUDANÇA ANTERIOR

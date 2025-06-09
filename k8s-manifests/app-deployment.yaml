@@ -1,0 +1,35 @@
+# backend-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment # Nome do Deployment
+  labels:
+    app: app_pod   # Rótulo para identificar os Pods deste Deployment
+spec:
+  replicas: 1             # Começamos com 1 réplica. Escalaremos isso depois!
+  selector:
+    matchLabels:
+      app: app_pod # O seletor deve corresponder aos rótulos dos Pods
+  template:
+    metadata:
+      labels:
+        app: app_pod
+    spec:
+      containers:
+      - name: appserver # Nome do container dentro do Pod
+        image: appimage:latest # A imagem do container que você construiu (certifique-se de que ela esteja disponível no seu registro de imagens)
+        imagePullPolicy: Never # Use "Never" se você estiver usando uma imagem local ou "Always" se for de um registro remoto
+        ports:
+        - containerPort: 5000   # A porta interna que seu aplicativo Node.js escuta (do `PORT: 5000` no compose)
+        envFrom:
+          - configMapRef:
+              name: app-config  # Faremos isso na Etapa 3 para DB_HOST, DB_PORT, PORT
+          - secretRef:
+              name: postgres-secrets # Faremos isso na Etapa 3 para DB_USER, DB_PASSWORD, DB_NAME
+        resources: # Recomendado para gerenciar recursos e escalabilidade
+          requests:
+            cpu: "100m"  # 100 milicores de CPU (0.1 CPU core)
+            memory: "128Mi" # 128 Megabytes de memória
+          limits:
+            cpu: "500m"  # Limite máximo de 0.5 CPU cores
+            memory: "512Mi" # Limite máximo de 512 Megabytes

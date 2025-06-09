@@ -1,0 +1,19 @@
+# frontend-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver-service
+  labels:
+    app: web_pod
+spec:
+  selector:
+    app: web_pod # Deve corresponder aos labels dos Pods do seu frontend-deployment
+  ports:
+    - protocol: TCP
+      port: 80         # Porta que o Service expõe *dentro do cluster*
+      targetPort: 80   # Porta que o container do frontend (Nginx) *escuta* (do Deployment)
+      nodePort: 30080  # <--- NOVA PORTA PARA O SEU HOST! (ex: 30080, pode ser 8081, 9000, etc.)
+                        #      NodePort usa um range padrão 30000-32767.
+                        #      No Docker Desktop, se você usar type: LoadBalancer, ele pode mapear para 8081 diretamente.
+                        #      Vou usar NodePort aqui para demonstrar o conceito, mas se quiser 8081 exato, mude para LoadBalancer.
+  type: NodePort       # Tipo de Service: expõe o Service em uma porta em cada Node (no Docker Desktop, é o seu host)

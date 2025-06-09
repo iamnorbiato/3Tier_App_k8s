@@ -1,0 +1,15 @@
+# backend-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: appserver-service # <--- Este é o nome DNS que seu frontend Nginx deve usar!
+  labels:
+    app: app_pod
+spec:
+  selector:
+    app: app_pod # Deve corresponder aos labels dos Pods do seu backend-deployment
+  ports:
+    - protocol: TCP
+      port: 5000       # Porta que o Service expõe *dentro do cluster*
+      targetPort: 5000 # Porta que o container do backend *escuta* (do Deployment)
+  type: ClusterIP     # Tipo de Service: acessível apenas dentro do cluster

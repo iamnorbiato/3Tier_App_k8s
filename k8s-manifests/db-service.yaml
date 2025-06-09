@@ -1,0 +1,18 @@
+# db-service.yaml (MODIFICADO PARA NodePort)
+apiVersion: v1
+kind: Service
+metadata:
+  name: dbserver-service
+  labels:
+    app: db_pod
+spec:
+  selector:
+    app: db_pod
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+      nodePort: 30002 # <--- Adicione esta linha para expor no seu host!
+                      #      Escolha uma porta entre 30000-32767 que não esteja em uso.
+                      #      30002 é um bom exemplo para evitar conflito com 30080 do frontend.
+  type: NodePort # <--- MUDANÇA AQUI: de ClusterIP para NodePort
