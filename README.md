@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+# 3Tier_App_k8s
+This repository creates a Kubernetes 3 tier solution 1 - App, 2 - Web - 3 db
+
+>>>>>>> eb37173260300874cf8d4500aea1120edaaf9d72
 # 🚀 Aplicação 3 Camadas no Kubernetes (Backend Node.js, Frontend React/Nginx, PostgreSQL) 🚀
 
 Este repositório contém uma aplicação de exemplo de três camadas (Frontend, Backend, Banco de Dados) configurada para ser implantada e gerenciada no Kubernetes, utilizando Docker Desktop como ambiente local.
