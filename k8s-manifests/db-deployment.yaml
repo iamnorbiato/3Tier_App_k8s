@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: db-deployment
+  namespace: default
   labels:
     app: db_pod
 spec:

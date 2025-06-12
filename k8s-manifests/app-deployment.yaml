@@ -1,8 +1,9 @@
-# backend-deployment.yaml
+# app-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-deployment # Nome do Deployment
+  namespace: default
   labels:
     app: app_pod   # Rótulo para identificar os Pods deste Deployment
 spec:

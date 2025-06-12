@@ -7,8 +7,8 @@ WORKDIR /app
 
 # Copia package.json e package-lock.json (se houver)
 COPY package*.json ./ 
-# Instala as dependências de produção
-RUN npm install --production 
+# Instala as dependências
+RUN npm install  
 
 # <--- ESTA LINHA É CRÍTICA! Copia todo o código-fonte do diretório atual (backend) para /app
 COPY . . 
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 5000 
 
 # Comando para iniciar seu app. Se você usa nodemon, certifique-se de que ele está configurado corretamente para o ambiente de container.
-CMD ["npm", "start"]
+CMD ["node_modules/.bin/nodemon", "src/app.js"]

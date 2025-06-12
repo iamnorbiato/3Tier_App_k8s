@@ -1,0 +1,101 @@
+/* src/App.css */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  overflow: hidden; /* Evita scroll desnecessário no body */
+}
+
+.app-container {
+  display: flex; /* Cria um layout flexbox para sidebar e main-content */
+  height: 100vh; /* Ocupa 100% da altura da viewport */
+  background-color: #f0f2f5; /* Cor de fundo geral */
+}
+
+.sidebar {
+  width: 250px; /* Largura fixa da sidebar */
+  background-color: #333; /* Cor escura para a sidebar */
+  color: white;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  /* Ajustes para o menu (não visíveis na imagem, mas bons para organização) */
+  padding-top: 50px; /* Espaço para o título */
+  text-align: center;
+}
+
+.menu-item {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #555;
+  margin-bottom: 5px;
+}
+
+.menu-item:hover {
+  background-color: #555;
+}
+
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.app-header {
+  background-color: #4CAF50; /* Verde para o cabeçalho, como na imagem */
+  color: white;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2em;
+}
+
+.content-area {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  flex-grow: 1; /* Permite que a área de conteúdo preencha o espaço restante */
+  display: flex; /* Torna-o um contêiner flexível */
+  flex-direction: column; /* Organiza os filhos (formulário e tabela) verticalmente */
+  min-height: 0; /* Importante para que os flex items com overflow funcionem dentro dela */
+}
+
+/* Estilo para links do NavLink */
+.menu-item {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #555;
+  margin-bottom: 5px;
+  text-decoration: none; /* Remove sublinhado padrão dos links */
+  color: white; /* Cor do texto padrão */
+  display: block; /* Garante que toda a área do item seja clicável */
+}
+
+.menu-item:hover {
+  background-color: #555;
+}
+
+/* Estilo para o item de menu ativo */
+.menu-item.active { /* Note: NavLink adiciona a classe 'active' por padrão no v6 */
+  background-color: #4CAF50; /* Uma cor para indicar que está ativo */
+  font-weight: bold;
+}
+
+.table-scroll-wrapper {
+  flex-grow: 1; /* Faz este wrapper ocupar todo o espaço restante abaixo do formulário */
+  overflow-y: auto; /* AQUI A ROLAGEM ACONTECE */
+  padding-top: 15px; /* Espaço entre o formulário e a tabela */
+  min-height: 0; /* Necessário para que flex-grow com overflow funcione */
+  max-height: 300px; /* Limita a altura máxima da tabela para que não ocupe toda a tela */
+}

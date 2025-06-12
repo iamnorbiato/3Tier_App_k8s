@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { pool } = require('./db'); // <--- Importa o 'pool'
 
-async function getF1Drivers(drivername, nacionality) {
+async function getF1Drivers(drivername, nationality) {
  
   let client; // Declarar 'client' para poder liberar no 'finally'
   try {
@@ -15,9 +15,11 @@ async function getF1Drivers(drivername, nacionality) {
 
     const params = [
       drivername ? `%${drivername}%` : null,
-      nacionality ? `%${nacionality}%` : null
+      nationality ? `%${nationality}%` : null
     ];
   
+console.log('Parâmetros da query SQL:', params);
+
     const res = await client.query(query, params); // <--- Usa o cliente do pool
     console.log('Resultado da query (do f1drivers.js):', res.rows);
 

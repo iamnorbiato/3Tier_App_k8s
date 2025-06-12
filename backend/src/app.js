@@ -1,5 +1,6 @@
 // backend/src/app.js
 
+const cors = require('cors');
 const express = require('express');
 const app = express();
 const { executeSqlAndFetchData } = require('./runme');
@@ -7,6 +8,19 @@ const { getF1Teams } = require('./f1teams');
 const { getF1Drivers } = require('./f1drivers');
 
 const port = process.env.PORT || 5000;
+
+// Configuração do CORS
+const corsOptions = {
+    // Certifique-se de que http://home.local:30080 ou 6000 está aqui, dependendo de como você acessa o frontend
+    // Como o navegador acessa o frontend na 6000, e a API é chamada do front, o origin é 6000.
+    // Se você acessar o frontend em 30080, mude para 30080.
+    origin: ['http://localhost:3000', 'http://localhost:6000', 'http://home.local:6000', 'http://home.local:30080'], // <--- AJUSTE COM SUAS PORTAS DE ACESSO AO FRONTEND
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions)); // <--- ADICIONE ESTA LINHA, ANTES DE app.use(express.json());
 
 app.use(express.json());
 
@@ -46,15 +60,15 @@ app.get('/f1teams', async (req, res) => {
 });
 // --- FIM DA NOVA ROTA ---
 
-// Exemplo de uso: GET /f1drivers?nacionality=Brazil
+// Exemplo de uso: GET /f1drivers?nationality=Brazil
 // --- NOVA ROTA PARA BUSCAR Pilotos DE F1 ---
 app.get('/f1drivers', async (req, res) => {
-    // Pega os parâmetros 'drivername' e 'nacionality' da query string da URL
-    const { drivername, nacionality } = req.query;
+    // Pega os parâmetros 'drivername' e 'nationality' da query string da URL
+    const { drivername, nationality } = req.query;
 
     try {
         // Chama a função getF1Drivers (que está em f1teams.js) com os parâmetros
-        const drivers = await getF1Drivers(drivername, nacionality);
+        const drivers = await getF1Drivers(drivername, nationality);
         res.json({
             message: 'Pilotos de F1 encontradas.',
             count: drivers.length,

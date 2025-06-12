@@ -3,6 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: postgres-pv-claim # Nome do seu PVC
+  namespace: default
 spec:
   accessModes:
     - ReadWriteOnce       # Permite que seja montado como leitura/escrita por um único nó

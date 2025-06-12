@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-config # Este nome deve corresponder ao 'app-config' do seu backend-deployment.yaml
+  namespace: default
 data:
   DB_HOST: dbserver-service  # O nome do service do DB (que criaremos na Etapa 2)
   DB_PORT: "5432"            # Porta padrão do PostgreSQL, precisa ser string
